@@ -11,19 +11,27 @@ const nuevoToken = async( req = request, res = response ) =>{
 }
 
 const validarToken = async ( req = request, res = response) =>{
-    const tokenValidar = req.header('authorization').substring(7);
-    try {
-        const token = await verificarToken( tokenValidar );
-        res.status(200).json({
-            ok: true,
-            token
-        });
-    } catch (error) {
-        res.status(200).json({
-            ok: true,
-            msg: 'Token expirado o no válido'
-        });
+    const tokenValidar = req.header('authorization');
+    if( tokenValidar ){
+        try {
+            const token = await verificarToken( tokenValidar.substring(7) );
+            res.status(200).json({
+                ok: true,
+                token
+            });
+        } catch (error) {
+            res.status(200).json({
+                ok: true,
+                msg: 'El token ingresado expiro o no es válido'
+            });
+        }
+    }else{
+        res.status(400).json({
+            ok: false,
+            msg: 'No se ha suministrado un token para realizar está petición'
+        })
     }
+
 
 }
 
