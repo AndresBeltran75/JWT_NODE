@@ -11,6 +11,6 @@ app.use( express.json() );
 
 app.use('/api/token', require('./rutas/status.js') );
 
-app.listen(process.env.PUERTO || 80, () =>{
+app.listen(process.env.PUERTO, () =>{
     console.log(`Servidor corriendo en el puerto ${ process.env.PUERTO }`);
 });
